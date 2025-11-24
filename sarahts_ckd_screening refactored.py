@@ -84,8 +84,7 @@ def bmi_result(weight_lbs, height_inches):
         return None
 
 
-# Converting your final output to a Pandas DataFrame.
-
+# Converting your final output to a Pandas DataFrame and saving it to a CSV file
 output_rows = []
 for x, row in dem_df.iterrows():
     patient_id = row["patient_id"]
@@ -107,18 +106,30 @@ for x, row in dem_df.iterrows():
         }
     )
 
+# If filtering by patients with eGFR below 65. Converting your final output to a Pandas DataFrame and saving it to a CSV file.
+# output_rows = []
+# for x, row in dem_df.iterrows():
+#     patient_id = row["patient_id"]
+#     age = row["age"]
+#     height = row["height_inches"]
+#     weight = row["weight_lbs"]
+#     sex = row["sex"]
+#     scr = get_creatinine(patient_id)
+#     eGFR = eGFR_result(scr, sex, age)
+#     bmi = bmi_result(weight, height)
+#     if eGFR is not None and eGFR_below_65(eGFR):
+#         output_rows.append(
+#             {
+#                 "Patient Age": age,
+#                 "Patient Height": height,
+#                 "Patient Weight": weight,
+#                 "Patient BMI": bmi,
+#                 "Patient Sex": sex,
+#                 "Patient eGFR": eGFR,
+#             }
+#         )
+
 output_df = pd.DataFrame(output_rows)
 output_df.to_csv("results.csv", index=False)
 
 print("Results saved to results.csv with requested columns only.")
-# Print only results with only the requested columns to results.csv
-# requested_cols = [
-#     "Patient Age",
-#     "Patient Height",
-#     "Patient Weight",
-#     "Patient BMI",
-#     "Patient Sex",
-#     "Patient eGFR",
-# ]
-# # df[requested_cols].to_csv("results.csv", index=False)
-# print("Results saved to results.csv with requested columns only.")
